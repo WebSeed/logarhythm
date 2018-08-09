@@ -1,0 +1,179 @@
+@function lerp($var-size-start, $var-size-start-unitless, $var-size-end-unitless) {
+  @return calc(var(#{$var-size-start}) +
+    (var(#{$var-size-end-unitless}) - var(#{$var-size-start-unitless})) *
+    (100vw - #{$viewport-start-rem}) /
+    (#{$viewport-end} - #{$viewport-start}));
+}
+
+@mixin lerp($var, $var-size-start, $var-size-end, $var-size-start-unitless, $var-size-end-unitless) {
+  #{$var}: lerp($var-size-start, $var-size-start-unitless, $var-size-end-unitless);
+
+  @media (max-width: $viewport-start-px) {
+    #{$var}: var($var-size-start);
+  }
+
+  @media (min-width: $viewport-end-px) {
+    #{$var}: var($var-size-end);
+  }
+}
+
+$font-size-base: 16 !default;
+
+$space-size-start: 16 !default;
+$space-size-end: 24 !default;
+
+$viewport-start: 360 !default;
+$viewport-end: 1024 !default;
+
+$font-size-body-start: 16 !default;
+$font-size-body-end: 18 !default;
+
+$font-size-h1-start: 36 !default;
+$font-size-h1-end: 48 !default;
+
+// Read-only
+$viewport-start-rem: 1rem * $viewport-start / $font-size-base;
+$viewport-start-px: 1px * $viewport-start;
+
+$viewport-end-rem: 1rem * $viewport-end / $font-size-base;
+$viewport-end-px: 1px * $viewport-end;
+
+:root {
+  --space-size-start: #{$space-size-start};
+  --space-size-end: #{$space-size-end};
+
+  --font-size-body-start: #{$font-size-body-start};
+  --font-size-body-end: #{$font-size-body-end};
+
+  --font-size-h1-start: #{$font-size-h1-start};
+  --font-size-h1-end: #{$font-size-h1-end};
+
+  // Read-only
+  @include lerp('--space', '--space-size-start-rem', '--space-size-end-rem', '--space-size-start', '--space-size-end');
+
+  @include lerp('--font-size-body', '--font-size-body-start-rem', '--font-size-body-end-rem', '--font-size-body-start', '--font-size-body-end');
+
+  @include lerp('--font-size-h1', '--font-size-h1-start-rem', '--font-size-h1-end-rem', '--font-size-h1-start', '--font-size-h1-end');
+
+  --space-neg: calc(-1 * var(--space));
+  --space-1: calc(0.25 * var(--space));
+  --space-2: calc(0.5 * var(--space));
+  --space-3: var(--space); // default
+  --space-4: calc(2 * var(--space));
+  --space-5: calc(4 * var(--space));
+  --space-6: calc(8 * var(--space));
+  --space-7: calc(16 * var(--space));
+
+  --space-size-start-rem: calc(1rem * var(--space-size-start) / #{$font-size-base});
+  --space-size-end-rem: calc(1rem * var(--space-size-end) / #{$font-size-base});
+
+  --font-size-body-start-rem: calc(1rem * var(--font-size-body-start) / #{$font-size-base});
+  --font-size-body-end-rem: calc(1rem * var(--font-size-body-end) / #{$font-size-base});
+
+  --font-size-h1-start-rem: calc(1rem * var(--font-size-h1-start) / #{$font-size-base});
+  --font-size-h1-end-rem: calc(1rem * var(--font-size-h1-end) / #{$font-size-base});
+}
+
+html {
+  box-sizing: border-box;
+}
+
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+}
+
+h1 {
+  font-size: var(--font-size-h1);
+}
+
+.m { margin: var(--space); }
+.m-1 { margin: var(--space-1); }
+.m-2 { margin: var(--space-2); }
+.m-3 { margin: var(--space-3); }
+.m-4 { margin: var(--space-4); }
+.m-5 { margin: var(--space-5) }
+.m-6 { margin: var(--space-6) }
+.m-7 { margin: var(--space-7) }
+
+.p { padding: var(--space); }
+.p-1 { padding: var(--space-1); }
+.p-2 { padding: var(--space-2); }
+.p-3 { padding: var(--space-3); }
+.p-4 { padding: var(--space-4); }
+.p-5 { padding: var(--space-5) }
+.p-6 { padding: var(--space-6) }
+.p-7 { padding: var(--space-7) }
+
+.mb { margin-bottom: var(--space); }
+.mb-1 { margin-bottom: var(--space-1); }
+.mb-2 { margin-bottom: var(--space-2); }
+.mb-3 { margin-bottom: var(--space-3); }
+.mb-4 { margin-bottom: var(--space-4); }
+.mb-5 { margin-bottom: var(--space-5) }
+.mb-6 { margin-bottom: var(--space-6) }
+.mb-7 { margin-bottom: var(--space-7) }
+
+.mt { margin-top: var(--space); }
+.mt-1 { margin-top: var(--space-1); }
+.mt-2 { margin-top: var(--space-2); }
+.mt-3 { margin-top: var(--space-3); }
+.mt-4 { margin-top: var(--space-4); }
+.mt-5 { margin-top: var(--space-5) }
+.mt-6 { margin-top: var(--space-6) }
+.mt-7 { margin-top: var(--space-7) }
+
+.pb { padding-bottom: var(--space); }
+.pb-1 { padding-bottom: var(--space-1); }
+.pb-2 { padding-bottom: var(--space-2); }
+.pb-3 { padding-bottom: var(--space-3); }
+.pb-4 { padding-bottom: var(--space-4); }
+.pb-5 { padding-bottom: var(--space-5) }
+.pb-6 { padding-bottom: var(--space-6) }
+.pb-7 { padding-bottom: var(--space-7) }
+
+.grid {
+  margin-left: var(--space-neg);
+}
+
+.cell {
+  display: inline-block;
+  width: 100%;
+  padding-left: var(--space);
+}
+
+.grid > .cell {
+  margin-bottom: var(--space);
+}
+
+.w1\/2 {
+  width: 50%;
+}
+
+.w1\/3 {
+  width: 33.333333%;
+}
+
+.content {
+  background-color: blue;
+  padding: var(--space);
+}
+
+.container {
+  padding-left: var(--space);
+  padding-right: var(--space);
+}
+
+.h {
+  background-color: fuchsia;
+  height: var(--space-x2)
+}
+
+body {
+  font-size: var(--font-size-body);
+}

@@ -1,0 +1,17 @@
+{
+  "name": "logarhythm",
+  "version": "1.0.0",
+  "description": "Logarhythm",
+  "main": "index.js",
+  "scripts": {
+    "start": "parcel index.html"
+  },
+  "repository": "git@github.com:WebSeed/logarhythm.git",
+  "author": "WebSeed <w.bamford@gmail.com>",
+  "license": "MIT",
+  "private": false,
+  "dependencies": {
+    "node-sass": "^4.9.2",
+    "parcel-bundler": "^1.9.7"
+  }
+}
