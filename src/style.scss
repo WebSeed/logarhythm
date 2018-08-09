@@ -108,10 +108,11 @@ $vp-to-px: 1px * $vp-to;
 
   --color-alpha-h: 195;
   --color-alpha-s: 50%;
+  --color-alpha-l: 80%;
 
-  --color-alpha:        hsla(var(--color-alpha-h), var(--color-alpha-s), 80%, 1);
-  --color-alpha-light:  hsla(var(--color-alpha-h), var(--color-alpha-s), 90%, 1);
-  --color-alpha-dark:   hsla(var(--color-alpha-h), var(--color-alpha-s), 70%, 1);
+  --color-alpha:        hsla(var(--color-alpha-h), var(--color-alpha-s), var(--color-alpha-l), 1);
+  --color-alpha-light:  hsla(var(--color-alpha-h), var(--color-alpha-s), calc(var(--color-alpha-l) + 10%), 1);
+  --color-alpha-dark:   hsla(var(--color-alpha-h), var(--color-alpha-s), calc(var(--color-alpha-l) - 10%), 1);
 }
 
 html {
