@@ -1,8 +1,8 @@
 @function lerp($var-from-rem, $var-from, $var-to) {
   @return calc(var(#{$var-from-rem}) +
     (var(#{$var-to}) - var(#{$var-from})) *
-    (100vw - #{$viewport-from-rem}) /
-    (#{$viewport-to} - #{$viewport-from}));
+    (100vw - #{$vp-from-rem}) /
+    (#{$vp-to} - #{$vp-from}));
 }
 
 @mixin lerp($var, $from, $to) {
@@ -18,23 +18,23 @@
   #{$var-from}: $from;
   #{$var-to}: $to;
 
-  #{$var-from-rem}: calc(1rem * var(#{$var-from}) / #{$font-size-base});
-  #{$var-to-rem}: calc(1rem * var(#{$var-to}) / #{$font-size-base});
+  #{$var-from-rem}: calc(1rem * var(#{$var-from}) / #{$fs-base});
+  #{$var-to-rem}: calc(1rem * var(#{$var-to}) / #{$fs-base});
 
   #{$var}: lerp($var-from-rem, $var-from, $var-to);
 
-  @media (max-width: $viewport-from-px) {
+  @media (max-width: $vp-from-px) {
     #{$var}: var($var-from-rem);
   }
 
-  @media (min-width: $viewport-to-px) {
+  @media (min-width: $vp-to-px) {
     #{$var}: var($var-to-rem);
   }
 }
 
 // Vars
 
-$font-size-base: 16 !default;
+$fs-base: 16 !default;
 
 // TODO?
 // $space: (
@@ -43,45 +43,75 @@ $font-size-base: 16 !default;
 //   to: 24,
 // )
 
-$space-from: 16 !default;
-$space-to: 24 !default;
+$s-from: 16 !default;
+$s-to: 24 !default;
 
-$viewport-from: 360 !default;
-$viewport-to: 1024 !default;
+$vp-from: 360 !default;
+$vp-to: 1024 !default;
 
-$font-size-body-from: 16 !default;
-$font-size-body-to: 18 !default;
+$fs-body-from: 16 !default;
+$fs-body-to: 18 !default;
 
-$font-size-h1-from: 36 !default;
-$font-size-h1-to: 48 !default;
+$fs-scaling: 1.25 !default;
+
+$fs1-from: 16 !default;
+$fs1-to: 18 !default;
+
+$fs2-from: $fs1-from * $fs-scaling !default;
+$fs2-to: $fs1-to * $fs-scaling !default;
+
+$fs3-from: $fs2-from * $fs-scaling !default;
+$fs3-to: $fs2-to * $fs-scaling !default;
+
+$fs4-from: $fs3-from * $fs-scaling !default;
+$fs4-to: $fs3-to * $fs-scaling !default;
+
+$fs5-from: $fs4-from * $fs-scaling !default;
+$fs5-to: $fs4-to * $fs-scaling !default;
+
+$fs6-from: $fs5-from * $fs-scaling !default;
+$fs6-to: $fs5-to * $fs-scaling !default;
+
+$fs7-from: $fs6-from * $fs-scaling !default;
+$fs7-to: $fs6-to * $fs-scaling !default;
 
 // Read-only
-$viewport-from-rem: 1rem * $viewport-from / $font-size-base;
-$viewport-from-px: 1px * $viewport-from;
+$vp-from-rem: 1rem * $vp-from / $fs-base;
+$vp-from-px: 1px * $vp-from;
 
-$viewport-to-rem: 1rem * $viewport-to / $font-size-base;
-$viewport-to-px: 1px * $viewport-to;
-
-// TODO: font heading scaling factor..
-// $font-size-scale: 1.2;
+$vp-to-rem: 1rem * $vp-to / $fs-base;
+$vp-to-px: 1px * $vp-to;
 
 :root {
 
   // Read-only
-  @include lerp('--space', $space-from, $space-to);
+  @include lerp('--s', $s-from, $s-to);
 
-  @include lerp('--font-size-body', $font-size-body-from, $font-size-body-to);
+  @include lerp('--fs-body', $fs-body-from, $fs-body-to);
 
-  @include lerp('--font-size-h1', $font-size-h1-from, $font-size-h1-to);
+  @include lerp('--fs1', $fs1-from, $fs1-to);
+  @include lerp('--fs2', $fs2-from, $fs2-to);
+  @include lerp('--fs3', $fs3-from, $fs3-to);
+  @include lerp('--fs4', $fs4-from, $fs4-to);
+  @include lerp('--fs5', $fs5-from, $fs5-to);
+  @include lerp('--fs6', $fs6-from, $fs6-to);
+  @include lerp('--fs7', $fs7-from, $fs7-to);
 
-  --space-neg: calc(-1 * var(--space));
-  --space-1: calc(0.25 * var(--space));
-  --space-2: calc(0.5 * var(--space));
-  --space-3: var(--space); // default
-  --space-4: calc(2 * var(--space));
-  --space-5: calc(4 * var(--space));
-  --space-6: calc(8 * var(--space));
-  --space-7: calc(16 * var(--space));
+  --s-n: calc(-1 * var(--s));
+  --s1: calc(0.25 * var(--s));
+  --s2: calc(0.5 * var(--s));
+  --s3: var(--s); // default
+  --s4: calc(2 * var(--s));
+  --s5: calc(4 * var(--s));
+  --s6: calc(8 * var(--s));
+  --s7: calc(16 * var(--s));
+
+  --color-alpha-h: 195;
+  --color-alpha-s: 50%;
+
+  --color-alpha:        hsla(var(--color-alpha-h), var(--color-alpha-s), 80%, 1);
+  --color-alpha-light:  hsla(var(--color-alpha-h), var(--color-alpha-s), 90%, 1);
+  --color-alpha-dark:   hsla(var(--color-alpha-h), var(--color-alpha-s), 70%, 1);
 }
 
 html {
@@ -98,92 +128,96 @@ body {
   font-family: sans-serif;
 }
 
-h1 {
-  font-size: var(--font-size-h1);
-}
+.fs1, h6 { font-size: var(--fs1); }
+.fs2, h5 { font-size: var(--fs2); }
+.fs3, h4 { font-size: var(--fs3); }
+.fs4, h3 { font-size: var(--fs4); }
+.fs5, h2 { font-size: var(--fs5); }
+.fs6, h1 { font-size: var(--fs6); }
+.fs7 { font-size: var(--fs7); }
 
-.m { margin: var(--space); }
-.m-1 { margin: var(--space-1); }
-.m-2 { margin: var(--space-2); }
-.m-3 { margin: var(--space-3); }
-.m-4 { margin: var(--space-4); }
-.m-5 { margin: var(--space-5) }
-.m-6 { margin: var(--space-6) }
-.m-7 { margin: var(--space-7) }
+h6, h5, h4, h3, h2, h1 { margin-bottom: 1em; }
 
-.p { padding: var(--space); }
-.p-1 { padding: var(--space-1); }
-.p-2 { padding: var(--space-2); }
-.p-3 { padding: var(--space-3); }
-.p-4 { padding: var(--space-4); }
-.p-5 { padding: var(--space-5) }
-.p-6 { padding: var(--space-6) }
-.p-7 { padding: var(--space-7) }
+.m { margin: var(--s); }
+.m1 { margin: var(--s1); }
+.m2 { margin: var(--s2); }
+.m3 { margin: var(--s3); }
+.m4 { margin: var(--s4); }
+.m5 { margin: var(--s5) }
+.m6 { margin: var(--s6) }
+.m7 { margin: var(--s7) }
 
-.mb { margin-bottom: var(--space); }
-.mb-1 { margin-bottom: var(--space-1); }
-.mb-2 { margin-bottom: var(--space-2); }
-.mb-3 { margin-bottom: var(--space-3); }
-.mb-4 { margin-bottom: var(--space-4); }
-.mb-5 { margin-bottom: var(--space-5) }
-.mb-6 { margin-bottom: var(--space-6) }
-.mb-7 { margin-bottom: var(--space-7) }
+.p { padding: var(--s); }
+.p1 { padding: var(--s1); }
+.p2 { padding: var(--s2); }
+.p3 { padding: var(--s3); }
+.p4 { padding: var(--s4); }
+.p5 { padding: var(--s5) }
+.p6 { padding: var(--s6) }
+.p7 { padding: var(--s7) }
 
-.mt { margin-top: var(--space); }
-.mt-1 { margin-top: var(--space-1); }
-.mt-2 { margin-top: var(--space-2); }
-.mt-3 { margin-top: var(--space-3); }
-.mt-4 { margin-top: var(--space-4); }
-.mt-5 { margin-top: var(--space-5) }
-.mt-6 { margin-top: var(--space-6) }
-.mt-7 { margin-top: var(--space-7) }
+.mb { margin-bottom: var(--s); }
+.mb1 { margin-bottom: var(--s1); }
+.mb2 { margin-bottom: var(--s2); }
+.mb3 { margin-bottom: var(--s3); }
+.mb4 { margin-bottom: var(--s4); }
+.mb5 { margin-bottom: var(--s5) }
+.mb6 { margin-bottom: var(--s6) }
+.mb7 { margin-bottom: var(--s7) }
 
-.pb { padding-bottom: var(--space); }
-.pb-1 { padding-bottom: var(--space-1); }
-.pb-2 { padding-bottom: var(--space-2); }
-.pb-3 { padding-bottom: var(--space-3); }
-.pb-4 { padding-bottom: var(--space-4); }
-.pb-5 { padding-bottom: var(--space-5) }
-.pb-6 { padding-bottom: var(--space-6) }
-.pb-7 { padding-bottom: var(--space-7) }
+.mt { margin-top: var(--s); }
+.mt1 { margin-top: var(--s1); }
+.mt2 { margin-top: var(--s2); }
+.mt3 { margin-top: var(--s3); }
+.mt4 { margin-top: var(--s4); }
+.mt5 { margin-top: var(--s5) }
+.mt6 { margin-top: var(--s6) }
+.mt7 { margin-top: var(--s7) }
+
+.pb { padding-bottom: var(--s); }
+.pb1 { padding-bottom: var(--s1); }
+.pb2 { padding-bottom: var(--s2); }
+.pb3 { padding-bottom: var(--s3); }
+.pb4 { padding-bottom: var(--s4); }
+.pb5 { padding-bottom: var(--s5) }
+.pb6 { padding-bottom: var(--s6) }
+.pb7 { padding-bottom: var(--s7) }
 
 .grid {
-  margin-left: var(--space-neg);
+  margin-left: var(--s-n);
 }
 
 .cell {
   display: inline-block;
   width: 100%;
-  padding-left: var(--space);
+  padding-left: var(--s);
 }
 
 .grid > .cell {
-  margin-bottom: var(--space);
+  margin-bottom: var(--s);
 }
 
-.w1\/2 {
-  width: 50%;
-}
-
-.w1\/3 {
-  width: 33.333333%;
-}
+.w1\/2 { width: 50%; }
+.w1\/3 { width: 33.333333%; }
+.w1\/4 { width: 25%; }
 
 .content {
-  background-color: blue;
-  padding: var(--space);
+  background-color: var(--color-alpha);
+  padding: var(--s);
 }
 
 .container {
-  padding-left: var(--space);
-  padding-right: var(--space);
+  padding-left: var(--s);
+  padding-right: var(--s);
 }
 
-.h {
-  background-color: fuchsia;
-  height: var(--space-x2)
+.d {
+  background-color: var(--color-alpha);
+  padding: var(--s2);
+  border-top: var(--s2) solid var(--color-alpha-light);
+  border-bottom: var(--s2) solid var(--color-alpha-dark);
 }
 
 body {
-  font-size: var(--font-size-body);
+  font-size: var(--fs-body);
 }
